@@ -1,0 +1,7 @@
+{% extends "Default/layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'error' | trans }}{% endblock %}
+
+{% block maincontent %}
+    {{ code }} : {{ message | trans }}
+{% endblock %}

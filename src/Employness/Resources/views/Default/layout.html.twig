@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>{% block title %}Employness{% endblock %}</title>
+        <link href="assets/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        input[class*="span"] {
+            height: 28px;
+            margin-bottom: 0;
+        }
+        p.pull-right {
+            color: white;
+            text-decoration: none;
+            padding: 10px 10px 11px;
+            line-height: 19px;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        thead {
+            font-weight: bold;
+            border-bottom: 2px solid #484848;
+        }
+        </style>
+        <link href="assets/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    </head>
+    <body>
+        {% block topbar%}{% include 'Default/topbar.html.twig' %}{% endblock %}
+        <div class="container">
+            {% include "Default/flash_messages.html.twig" %}
+
+            {% block maincontent %}{% endblock %}
+            {% block footer %}
+                <hr>
+                <footer>
+                  <p>&copy; <a href="http://twitter.com/guillaumepotier">guillaumepotier</a> 2012</p>
+                </footer>
+            {% endblock %}
+        </div> <!-- /container -->
+
+    {% block javascripts %}
+        <script src="assets/js/jquery-1.7.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-transition.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-collapse.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-alert.js"></script>
+
+        {# All other Twitter bootstrap js here. Pick if needed and place above to use in project
+        <script src="assets/bootstrap/js/bootstrap-modal.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-dropdown.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-scrollspy.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-tab.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-tooltip.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-popover.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-button.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-carousel.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-typeahead.js"></script>
+        #}
+    {% endblock %}
+    </body>
+</html>

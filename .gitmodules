@@ -1,0 +1,57 @@
+[submodule "vendor/Silex"]
+	path = vendor/Silex
+	url = http://github.com/fabpot/Silex.git
+[submodule "vendor/Twig"]
+	path = vendor/Twig
+	url = http://github.com/fabpot/Twig.git
+[submodule "vendor/Symfony/Bridge/Twig"]
+	path = vendor/Symfony/Bridge/Twig
+	url = https://github.com/symfony/TwigBridge.git
+[submodule "vendor/Twig-extensions"]
+	path = vendor/Twig-extensions
+	url = https://github.com/fabpot/Twig-extensions.git
+[submodule "vendor/dbal"]
+	path = vendor/dbal
+	url = http://github.com/doctrine/dbal.git
+[submodule "vendor/common"]
+	path = vendor/common
+	url = http://github.com/doctrine/common.git
+[submodule "vendor/monolog"]
+	path = vendor/monolog
+	url = http://github.com/Seldaek/monolog
+[submodule "vendor/Symfony/Component/Form"]
+	path = vendor/Symfony/Component/Form
+	url = http://github.com/symfony/Form.git
+[submodule "vendor/Symfony/Component/Validator"]
+	path = vendor/Symfony/Component/Validator
+	url = http://github.com/symfony/Validator.git
+[submodule "vendor/Symfony/Component/Console"]
+	path = vendor/Symfony/Component/Console
+	url = git://github.com/symfony/Console.git
+[submodule "vendor/Pimple"]
+	path = vendor/Pimple
+	url = https://github.com/fabpot/Pimple.git
+[submodule "vendor/Symfony/Component/ClassLoader"]
+	path = vendor/Symfony/Component/ClassLoader
+	url = git://github.com/symfony/ClassLoader.git
+[submodule "vendor/Symfony/Component/HttpKernel"]
+	path = vendor/Symfony/Component/HttpKernel
+	url = https://github.com/symfony/HttpKernel.git
+[submodule "vendor/Symfony/Component/EventDispatcher"]
+	path = vendor/Symfony/Component/EventDispatcher
+	url = https://github.com/symfony/EventDispatcher.git
+[submodule "vendor/Symfony/Component/HttpFoundation"]
+	path = vendor/Symfony/Component/HttpFoundation
+	url = https://github.com/symfony/HttpFoundation.git
+[submodule "vendor/Symfony/Component/Routing"]
+	path = vendor/Symfony/Component/Routing
+	url = https://github.com/symfony/Routing.git
+[submodule "vendor/Symfony/Component/Translation"]
+	path = vendor/Symfony/Component/Translation
+	url = git://github.com/symfony/Translation.git
+[submodule "web/assets/bootstrap"]
+	path = web/assets/bootstrap
+	url = https://github.com/twitter/bootstrap.git
+[submodule "vendor/swiftmailer"]
+	path = vendor/swiftmailer
+	url = https://github.com/swiftmailer/swiftmailer.git

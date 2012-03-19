@@ -1,0 +1,24 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="{{ path('index') }}">Employness</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li {% if app['request'].attributes.get('_route') == 'index' %} class="active"{% endif %}><a href="{{ path('index') }}">{{ 'home' | trans }}</a></li>
+          <li {% if app['request'].attributes.get('_route') == 'about' %} class="active"{% endif %}><a href="#about">{{ 'about' | trans }}</a></li>
+          <li {% if app['request'].attributes.get('_route') == 'admin' %} class="active"{% endif %}><a href="{{ path('admin') }}">{{ 'admin' | trans }}</a></li>
+        </ul>
+        <p class="pull-right">
+            {% if app['user'] is not sameas(false) %}
+                {{ 'logged_as' | trans }} <a href="{{ path('logout') }}">{{ app['user']['email'] }}</a>
+            {% endif %}
+        </p>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{% for key, flash in app.session.getFlashes() %}
+    <div class="alert alert-{{ key }}">
+      <a class="close" data-dismiss="alert">×</a>
+      {{ flash }}
+    </div>
+{% endfor %}

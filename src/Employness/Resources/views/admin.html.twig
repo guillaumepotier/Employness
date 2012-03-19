@@ -1,0 +1,23 @@
+{% extends "Default/layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'admin' | trans }}{% endblock %}
+
+{% block maincontent %}
+    <h1>{{ 'registered_users' | trans }}</h1>
+    <table class="table table-striped table-condensed">
+        <thead>
+            <td>{{ 'email' | trans }}</td>
+            <td>{{ 'evaluated_days' | trans }}</td>
+            <td>{{ 'avg_karma' | trans }}</td>
+            <td>{{ 'is_admin' | trans }}</td>
+        </thead>
+    {% for user in users %}
+        <tr>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['evaluated_days'] }}</td>
+            <td>{{ user['avg_karma'] }}</td>
+            <td> {% if user['admin'] == 1 %}Admin{% else %}~{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

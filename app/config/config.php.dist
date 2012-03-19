@@ -1,0 +1,32 @@
+<?php
+
+return array(
+    // site settings
+    'env'               => 'dev', // (prod|dev|test)
+    'locale'            => 'en',    // (en|fr)
+
+    // database settings
+    'db' => array(
+        'prod' => array(
+            'driver'    => 'pdo_mysql',
+            'dbname'    => 'employness_prod',
+            'host'      => 'localhost',
+            'user'      => 'root',
+            'password'  => 'root',
+        ),
+        'dev' => array(
+            'driver'    => 'pdo_mysql',
+            'dbname'    => 'employness_prod',
+            'host'      => 'localhost',
+            'user'      => 'root',
+            'password'  => 'root',
+        ),
+        'test' => array(
+            'driver'    => 'pdo_mysql',
+            'dbname'    => 'employness_prod',
+            'host'      => 'localhost',
+            'user'      => 'root',
+            'password'  => 'root',
+        ),
+    ),
+);

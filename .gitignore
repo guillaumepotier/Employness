@@ -1,0 +1,5 @@
+config.php
+parameters.php
+logs/*
+cache/*
+.DS_Store
