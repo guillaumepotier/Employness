@@ -9,7 +9,19 @@ use Symfony\Component\HttpKernel\Exception as Exception;
  */
 $app->get('/', function() use($app)
 {
-    return $app['twig']->render('index.html.twig');
+    $days = array();
+    $days_query = $app['db']->query("SELECT * FROM employness_days ORDER BY id DESC LIMIT 30");
+    while ($row = $days_query->fetch()) {
+        // TODO: create layer that automatically unserialise arrays when fetch db data..
+        $days[] = array(
+            'id'            =>  $row['id'],
+            'day'           =>  $row['day'],
+            'karma'         =>  $row['karma'],
+            'participants'  =>  unserialize($row['participants']),
+        );
+    }
+
+    return $app['twig']->render('index.html.twig', array('days' => $days));
 })
 ->bind('index');
 

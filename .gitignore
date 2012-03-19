@@ -3,4 +3,5 @@ parameters.php
 app/logs/*
 app/cache/*
 *.log
+bin/*.yml
 .DS_Store
