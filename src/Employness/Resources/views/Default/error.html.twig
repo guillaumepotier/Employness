@@ -3,5 +3,14 @@
 {% block title %}{{ parent() }} - {{ 'error' | trans }}{% endblock %}
 
 {% block maincontent %}
-    {{ code }} : {{ message | trans }}
+    {% if code == 500 %}
+        {% set style = 'error' %}
+    {% else %}
+        {% set style = 'warning' %}
+    {% endif %}
+
+    <div class="alert alert-{{ style }}">
+      <a class="close" data-dismiss="alert">×</a>
+      {{ 'error' | trans }} {{ code }}: {{ message | trans }}
+    </div>
 {% endblock %}

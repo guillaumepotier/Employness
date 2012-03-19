@@ -2,8 +2,17 @@
 
 return array(
     // site settings
-    'env'               => 'dev', // (prod|dev|test)
+    'env'               => 'dev',   // (prod|dev|test)
     'locale'            => 'en',    // (en|fr)
+
+    'mailer' => array(              // default config for a gmail SMTP use
+        'host'      =>  'smtp.gmail.com',
+        'port'      =>  465,
+        'username'  =>  'username@gmail.com',
+        'password'  =>  'password',
+        'encryption'=>  'ssl',
+        'auth_mode' =>  null,
+    ),
 
     // database settings
     'db' => array(

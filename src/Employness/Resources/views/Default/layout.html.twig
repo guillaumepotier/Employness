@@ -1,13 +1,13 @@
 <html>
     <head>
         <title>{% block title %}Employness{% endblock %}</title>
-        <link href="assets/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+        <link href="{{ asset("/bootstrap/docs/assets/css/bootstrap.css") }}" rel="stylesheet">
         <style type="text/css">
         body {
             padding-top: 60px;
             padding-bottom: 40px;
         }
-        input[class*="span"] {
+        input[class*="span"], select[class*="span"] {
             height: 28px;
             margin-bottom: 0;
         }
@@ -26,7 +26,7 @@
             border-bottom: 2px solid #484848;
         }
         </style>
-        <link href="assets/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="{{ asset("/bootstrap/docs/assets/css/bootstrap-responsive.css") }}" rel="stylesheet">
     </head>
     <body>
         {% block topbar%}{% include 'Default/topbar.html.twig' %}{% endblock %}
@@ -43,21 +43,21 @@
         </div> <!-- /container -->
 
     {% block javascripts %}
-        <script src="assets/js/jquery-1.7.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-transition.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-collapse.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-alert.js"></script>
+        <script src="{{ asset("/js/jquery-1.7.1.min.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-transition.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-collapse.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-alert.js") }}"></script>
 
         {# All other Twitter bootstrap js here. Pick if needed and place above to use in project
-        <script src="assets/bootstrap/js/bootstrap-modal.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-dropdown.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-scrollspy.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-tab.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-tooltip.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-popover.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-button.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-carousel.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-typeahead.js"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-modal.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-dropdown.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-scrollspy.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-tab.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-tooltip.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-popover.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-button.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-carousel.js") }}"></script>
+        <script src="{{ asset("/bootstrap/js/bootstrap-typeahead.js") }}"></script>
         #}
     {% endblock %}
     </body>

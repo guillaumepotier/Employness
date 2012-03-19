@@ -5,7 +5,7 @@ require_once __DIR__.'/autoload.php';
 use Employness\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception as Exception;
 
 $app = new Application();
 $config = require __DIR__.'/config/config.php';
@@ -43,7 +43,8 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translation.class_path'    => __DIR__.'/../vendor/symfony/src',
 ));
 $app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
-    'swiftmailer.class_path'  => __DIR__.'/../vendor/swiftmailer/lib/classes',
+    'swiftmailer.options'       => $config['mailer'],
+    'swiftmailer.class_path'    => __DIR__.'/../vendor/swiftmailer/lib/classes',
 ));
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options'            => $config['db'][$config['env']],
@@ -53,10 +54,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 // be sure not to acccess db config elsewhere
 unset($config['db']);
-
-$app['db.logger'] = function() use($app) {
-    return new \Blog\DB\Logger($app['monolog']);
-};
 
 /**
 *   Load Translations
@@ -78,6 +75,10 @@ require __DIR__.'/../src/Employness/Controller/BackendController.php';
 **/
 $app->before(function(Request $request) use ($app)
 {
+    // add here some Twig extensions. twig key seems unavailable outside a controller..
+    $app['twig']->addExtension(new \Twig_Extensions_Extension_Text());
+    $app['twig']->addExtension(new Employness\Twig\AssetsExtension(str_replace('/index.php', '', $_SERVER['PHP_SELF']).'/assets'));
+
     // User management
     $app['session']->start();
     $app['user'] = $request->getSession()->get('user', false);
@@ -92,7 +93,7 @@ $app->before(function(Request $request) use ($app)
                 array('redirect' => base64_encode($app['url_generator']->generate('admin')))
             ));
         } elseif ($user['admin'] == 0) {
-            throw new AccessDeniedHttpException('must_be_admin');
+            throw new Exception\AccessDeniedHttpException('must_be_admin');
         }
     }
 });
@@ -100,7 +101,7 @@ $app->before(function(Request $request) use ($app)
 /**
 *   Custom error pages
 **/
-$app->error(function (Exception $e) use ($app) 
+$app->error(function (\Exception $e) use ($app) 
 {
     if ($e instanceof NotFoundHttpException) {
         return $app['twig']->render('Default/error.html.twig', array('code' => 404, 'message' => $e->getMessage()));
