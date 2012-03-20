@@ -26,7 +26,7 @@ class DayRepository extends AbstractRepository
             );
         }
 
-        return $this->cache[md5($query)] = $output;
+        return $this->cache[md5($query)] = array_reverse($output);
     }
 
     public function getAvgKarma($limit = 30)
