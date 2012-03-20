@@ -16,6 +16,7 @@ class UserRepository extends AbstractRepository
 
     public function getAvgUsersKarma()
     {
-        return round($this->conn->fetchAssoc("SELECT AVG(karma/evaluated_days) AS avg FROM {$this->table}"), 2);
+        $avg = $this->conn->fetchAssoc("SELECT AVG(karma/evaluated_days) AS avg FROM {$this->table}");
+        return round($avg['avg'], 2);
     }
 }
