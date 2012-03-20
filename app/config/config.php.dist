@@ -4,6 +4,7 @@ return array(
     // site settings
     'env'               => 'dev',   // (prod|dev|test)
     'locale'            => 'en',    // (en|fr)
+    'host'              => 'http://yourdomain.com',    // absolute url to your index.php file (without trailing slash)
 
     'mailer' => array(              // default config for a gmail SMTP use
         'host'      =>  'smtp.gmail.com',

@@ -15,6 +15,7 @@ if (isset($_SERVER['ENV']) && in_array($_SERVER['ENV'], array('dev', 'test', 'pr
     $config['env'] = $_SERVER['ENV'];
 }
 $app['debug'] = $config['env'] == 'prod' ? false : true;
+$app['host'] = $config['host'];
 
 /**
 *   Load Extensions / Services

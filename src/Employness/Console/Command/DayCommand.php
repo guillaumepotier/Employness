@@ -42,6 +42,7 @@ class DayCommand extends Command
                     die("The current day has not yet been created!\n");
                 }
 
+                $app['url_generator']->getContext()->setHost($app['host']);
                 $query = $app['db']->query("SELECT * FROM employness_users ORDER BY id ASC");
                 while ($user = $query->fetch()) {
                     $url = $app['url_generator']->generate(
