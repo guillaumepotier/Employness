@@ -47,6 +47,8 @@ return array(
         'avg_last_days_karma'   =>  'Average karma for last 30 days',
         'karma_for_last_30_days'    =>  'Last 30 days\' karma',
         'be_anonymous'      =>  'I\'d like to be anonymous',
+        'daily_feedback_subject'    =>  'Rate your day!',
+        'daily_feedback_body'   =>  'Please, take a few seconds to rate your day here: ',
     ),
     'fr'    =>  array(
         'hello'             =>  'Salut',

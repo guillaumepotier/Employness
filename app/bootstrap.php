@@ -16,6 +16,7 @@ if (isset($_SERVER['ENV']) && in_array($_SERVER['ENV'], array('dev', 'test', 'pr
 }
 $app['debug'] = $config['env'] == 'prod' ? false : true;
 $app['host'] = $config['host'];
+$app['mailer.email'] = $config['mailer']['username'];
 
 /**
 *   Load Extensions / Services
@@ -53,8 +54,9 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.common.class_path'  => __DIR__.'/../vendor/common/lib',
 ));
 
-// be sure not to acccess db config elsewhere
+// be sure not to acccess db and mailer config elsewhere
 unset($config['db']);
+unset($config['mailer']);
 
 /**
 *   Load DB Repositories

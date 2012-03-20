@@ -31,9 +31,7 @@ class DayCommand extends Command
         $app = $this->getApp();
         switch($input->getArgument('action')) {
             case 'create':
-                // TODO: use proper dql..
-                $sql = "INSERT INTO employness_days SET day = NOW(), participants = 'a:0:{}'";
-                $app['db']->query($sql);
+                $app['db']->query("INSERT INTO employness_days SET day = NOW(), participants = 'a:0:{}'");
                 echo "The day has been created!\n";
                 break;
             case 'ask':
@@ -43,8 +41,8 @@ class DayCommand extends Command
                 }
 
                 $app['url_generator']->getContext()->setHost($app['host']);
-                $query = $app['db']->query("SELECT * FROM employness_users ORDER BY id ASC");
-                while ($user = $query->fetch()) {
+                $users = $app['user.repository']->findAll();
+                foreach ($users as $user) {
                     $url = $app['url_generator']->generate(
                         'give_karma', 
                         array(
@@ -52,12 +50,13 @@ class DayCommand extends Command
                             'token'     => sha1($user['id'].$user['token']), 
                             'day_id'    => $day['id'],
                         ),true);
+
                     $message = \Swift_Message::newInstance()
-                            ->setSubject('[Employness] Your Daily Feedback! ('.$day['day'].')')
-                            ->setFrom(array('noreply@guillaumepotier.com'))
+                            ->setSubject('[Employness] '.$app['translator']->trans('daily_feedback_subject').' ('.$day['day'].')')
+                            ->setFrom(array($app['mailer.email'] => 'Employness'))
                             ->setTo(array($user['email']))
-                            ->setBody('<a href="'.$url.'">'.$url.'</a>', 'text/html')
-                            ->addPart($url, 'text/plain');
+                            ->setBody($app['translator']->trans('daily_feedback_body').' <a href="'.$url.'">'.$url.'</a>', 'text/html')
+                            ->addPart($app['translator']->trans('daily_feedback_body').' '.$url, 'text/plain');
                     $app['mailer']->send($message);
                     echo "Email sent to ".$user['email']."\n";
                 }
