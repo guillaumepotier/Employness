@@ -18,17 +18,26 @@
             line-height: 19px;
             margin: 0;
         }
-        h1 {
-            margin-bottom: 10px;
+        h1, h2 {
+            margin-bottom: 20px;
         }
         thead {
             font-weight: bold;
             border-bottom: 2px solid #484848;
         }
+        #forkme {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 99999;
+        }
         </style>
         <link href="{{ asset("/bootstrap/docs/assets/css/bootstrap-responsive.css") }}" rel="stylesheet">
     </head>
     <body>
+        <a href="https://github.com/guillaumepotier/Employness">
+            <img id="forkme" src="{{ asset("/images/forkme.png") }}" alt="Fork me on GitHub">
+        </a>
         {% block topbar%}{% include 'Default/topbar.html.twig' %}{% endblock %}
         <div class="container">
             {% include "Default/flash_messages.html.twig" %}

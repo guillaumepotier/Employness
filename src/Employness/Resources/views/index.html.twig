@@ -4,29 +4,45 @@
 
 {% block maincontent %}
     <!-- Main hero unit for a primary marketing message or call to action -->
-    <div class="hero-unit" style="padding:0;">
-        <div id="chart_div" style="width: 1170px; height: 216px;"></div>
+    <div style="padding:0;">
+        <h2 style="text-align: center;">{{ 'karma_for_last_30_days' | trans }}</h2>
+        <div id="global_chart" style="width: 1170px; height: 216px;">{% if days | length == 0 %}{{ 'not_enough_data' | trans }}{% endif %}</div>
     </div>
-
+    <hr>
     <!-- Example row of columns -->
     <div class="row">
-        <div class="span4">
-            <h2>{{ 'share_your_feelings' | trans }}</h2>
-            <p>{{ 'share_your_feelings_desc' | trans | raw }}</p>
+        <div class="span6">
+            <h2 style="text-align: center;">{{ 'yesterday_rating' | trans }}</h2>
+            <p id="yesterday_chart">{% if repartition | length == 0 %}{{ 'not_enough_data' | trans }}{% endif %}</p>
         </div>
-        <div class="span4">
-            <h2>{{ 'be_listened' | trans }}</h2>
-            <p>{{ 'be_listened_desc' | trans | raw }}</p>
-        </div>
-        <div class="span4">
-            <h2>{{ 'manage_your_employees_happiness' | trans }}</h2>
-            <p>{{ 'manage_your_employees_happiness_desc' | trans | raw}}</p>
+        <div class="span6">
+            <h2 style="text-align: center;">{{ 'some_stats' | trans }}</h2>
+            <p>
+                <table class="table table-striped table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>{{ 'user_best_karma' | trans }}</td>
+                            <td>{{ user_best_karma['email'] }} ~ {% if user_best_karma['evaluated_days'] != 0 %}{{ round(user_best_karma['karma']/user_best_karma['evaluated_days'],2) }}{% else %}0{% endif %} karma</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'avg_karma_users' | trans }}</td>
+                            <td>{{ avg_karma_users }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'avg_last_days_karma' | trans }}</td>
+                            <td>{{ avg_last_days_karma }} karma</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent()  }}
+
+    {% if days | length > 0 %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
           google.load("visualization", "1", {packages:["corechart"]});
@@ -44,12 +60,38 @@
             ]);
 
             var options = {
-              title: 'Daily Karma for last 30 days',
-              hAxis: {title: 'Days',  titleTextStyle: {color: 'grey'}}
+                width: 1170,
+                height: 216,
             };
 
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.AreaChart(document.getElementById('global_chart'));
             chart.draw(data, options);
           }
         </script>
+    {% endif %}
+
+    {% if repartition | length > 0 %}
+        <script type="text/javascript">
+              google.load("visualization", "1", {packages:["corechart"]});
+              google.setOnLoadCallback(drawChart);
+              function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Karma');
+                data.addColumn('number', 'Nb ratigs');
+                data.addRows([
+                    {% for data in repartition %}
+                        {% set kr = 'rating_' ~ data['karma'] %}
+                        ['{{ kr | trans }}', {{ data['count'] }}],
+                    {% endfor %}
+                ]);
+
+                var options = {
+                    height: 250,
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('yesterday_chart'));
+                chart.draw(data, options);
+              }
+        </script>
+    {% endif %}
 {% endblock %}

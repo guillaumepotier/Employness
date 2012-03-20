@@ -10,7 +10,7 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li {% if app['request'].attributes.get('_route') == 'index' %} class="active"{% endif %}><a href="{{ path('index') }}">{{ 'home' | trans }}</a></li>
-          <li {% if app['request'].attributes.get('_route') == 'about' %} class="active"{% endif %}><a href="#about">{{ 'about' | trans }}</a></li>
+          <!-- <li {% if app['request'].attributes.get('_route') == 'about' %} class="active"{% endif %}><a href="#about">{{ 'about' | trans }}</a></li> -->
           <li {% if app['request'].attributes.get('_route') == 'admin' %} class="active"{% endif %}><a href="{{ path('admin') }}">{{ 'admin' | trans }}</a></li>
         </ul>
         <p class="pull-right">

@@ -10,18 +10,40 @@ use Symfony\Component\HttpKernel\Exception as Exception;
 $app->get('/', function() use($app)
 {
     $days = array();
+    $total_karma = 0;
+    $total_participants = 0;
     $days_query = $app['db']->query("SELECT * FROM employness_days ORDER BY id DESC LIMIT 30");
+
     while ($row = $days_query->fetch()) {
         // TODO: create layer that automatically unserialise arrays when fetch db data..
-        $days[] = array(
+        $participants = unserialize($row['participants']);
+        $days[$row['day']] = array(
             'id'            =>  $row['id'],
             'day'           =>  $row['day'],
             'karma'         =>  $row['karma'],
-            'participants'  =>  unserialize($row['participants']),
+            'participants'  =>  $participants,
         );
+        $total_karma += $row['karma'];
+        $total_participants += sizeof($participants);
     }
 
-    return $app['twig']->render('index.html.twig', array('days' => $days));
+    $yesterday_id = isset($days[date('Y-m-d', strtotime("yesterday"))]['id']) ? $days[date('Y-m-d', strtotime("yesterday"))]['id'] : -1;
+    $yesterday_repartiion = $app['db']->query("SELECT day_id, karma, COUNT(*) AS count FROM employness_karma WHERE day_id = ".$yesterday_id." GROUP BY karma");
+    $repartition = array();
+    while ($row = $yesterday_repartiion->fetch()) {
+        $repartition[] = array('karma' => $row['karma'], 'count' => $row['count']);
+    }
+
+    $user_best_karma = $app['db']->fetchAssoc("SELECT * FROM employness_users ORDER BY karma/evaluated_days DESC LIMIT 1");
+    $avg_karma_users = $app['db']->fetchAssoc("SELECT AVG(karma/evaluated_days) AS avg FROM employness_users");
+
+    return $app['twig']->render('index.html.twig', array(
+        'days'                  =>  $days, 
+        'repartition'           =>  $repartition,
+        'user_best_karma'       =>  $user_best_karma,
+        'avg_karma_users'       =>  round($avg_karma_users['avg'], 2),
+        'avg_last_days_karma'   =>  $total_participants != 0 ? round($total_karma/$total_participants, 2) : 0,
+    ));
 })
 ->bind('index');
 
@@ -49,6 +71,9 @@ $app->match('/login', function(Request $request) use($app)
 })
 ->bind('login');
 
+/**
+ * logout action
+ */
 $app->get('/logout', function(Request $request) use($app)
 {
     $request->getSession()->set('user', $app['user'] = false);
@@ -57,6 +82,9 @@ $app->get('/logout', function(Request $request) use($app)
 })
 ->bind('logout');
 
+/**
+ * rate your day action
+ */
 $app->match('/give/karma/{day_id}/{email}/{token}', function(Request $request, $day_id, $email, $token) use($app)
 {
     // first, we check that is url is correct, allowed and not already used..
@@ -84,16 +112,41 @@ $app->match('/give/karma/{day_id}/{email}/{token}', function(Request $request, $
         return $app->redirect($app['url_generator']->generate('index'));
     }
 
+    // let's roll, build the form!
+    $form = $app['form.factory']->createBuilder('form');
+
+    $form = $form->add('karma', 'choice', array(
+        'label'             => $app['translator']->trans('rate_your_day'),
+        'choices'           => array(
+            '1' => $app['translator']->trans('rating_1'),
+            '2' => $app['translator']->trans('rating_2'),
+            '3' => $app['translator']->trans('rating_3'),
+            '4' => $app['translator']->trans('rating_4'),
+            '5' => $app['translator']->trans('rating_5'),
+        ),
+        'preferred_choices' => array('3'),
+        'required'          => true,
+    ))
+    ->add('anonymous', 'checkbox', array(
+        'label'     =>  $app['translator']->trans('be_anonymous'),
+        'required'  => false,
+    ))
+    ->getForm();
+
     // then, we can check if a rating is done
-    // TODO: uses prepare and eventually rollback..
-    if ($request->request->has('_karma')) {
-        if (in_array($request->request->get('_karma'), array(1, 2, 3, 4, 5))) {
-            $insert = $app['db']->query("INSERT INTO employness_karma SET user_id = ".$user['id'].", day_id = $day_id, karma = ".$request->request->get('_karma'));
+    // TODO: uses prepare and eventually rollback for queries..
+    if ($request->getMethod() == 'POST') {
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $insert = $app['db']->query("INSERT INTO employness_karma SET user_id = ".$user['id'].", day_id = $day_id, karma = ".$data['karma']);
             if (false !== $insert) {
                 $new_participants = unserialize($day['participants']);
-                $new_participants[] = $user['email'];
-                $app['db']->query("UPDATE employness_days SET karma = (karma+".$request->request->get('_karma')."), participants = '".serialize($new_participants)."' WHERE id = $day_id");
-                $app['db']->query("UPDATE employness_users SET evaluated_days = (evaluated_days+1), karma = (karma+".$request->request->get('_karma').") WHERE id = ".$user['id']);
+                $new_participants[] = $data['anonymous'] === true ? 'anonymous' : $user['email'];
+                $app['db']->query("UPDATE employness_days SET karma = (karma+".$data['karma']."), participants = '".serialize($new_participants)."' WHERE id = $day_id");
+                $app['db']->query("UPDATE employness_users SET evaluated_days = (evaluated_days+1), karma = (karma+".$data['karma'].") WHERE id = ".$user['id']);
 
                 $request->getSession()->setFlash('success', $app['translator']->trans('successful_rating'));
                 return $app->redirect($app['url_generator']->generate('index'));
@@ -105,6 +158,6 @@ $app->match('/give/karma/{day_id}/{email}/{token}', function(Request $request, $
         }
     }
 
-    return $app['twig']->render('rate_day.html.twig');
+    return $app['twig']->render('rate_day.html.twig', array('form' => $form->createView()));
 })
 ->bind('give_karma');

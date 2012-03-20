@@ -113,4 +113,5 @@ $app->error(function (\Exception $e) use ($app)
     return $app['twig']->render('Default/error.html.twig', array('code' => $code, 'message' => $e->getMessage()));
 });
 
+// use cache in prod env
 return $app;
