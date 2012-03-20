@@ -16,6 +16,7 @@ class DayCommand extends Command
             ->setDescription('create a new day for notation')
             ->setHelp('You can create a new day with: <info>day create</info>')
             ->addArgument('action', InputArgument::REQUIRED, 'create/ask')
+            ->addOption('environment', '-env', InputOption::VALUE_OPTIONAL, 'environment')
         ;
     }
 

@@ -18,6 +18,7 @@ class UserCommand extends Command
             ->addOption('email', 'e', InputOption::VALUE_REQUIRED, 'user email')
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'user password')
             ->addOption('admin', 'a', InputOption::VALUE_OPTIONAL, 'isAdmin')
+            ->addOption('environment', '-env', InputOption::VALUE_OPTIONAL, 'environment')
         ;
     }
 

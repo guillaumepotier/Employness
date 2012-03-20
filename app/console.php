@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$_SERVER['ENV'] = 'dev';
+$_SERVER['ENV'] = false;
 
 if (false !== $pos = array_search('-e', $argv) || false !== $pos = array_search('--env', $argv)) {
     $_SERVER['ENV'] = $argv[$pos];
