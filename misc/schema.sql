@@ -2,23 +2,21 @@
 -- version 3.3.9.2
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Mar 18, 2012 at 04:02 PM
--- Server version: 5.5.9
--- PHP Version: 5.3.6
+-- Serveur: localhost
+-- Généré le : Mar 20 Mars 2012 à 14:26
+-- Version du serveur: 5.5.9
+-- Version de PHP: 5.3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `employness`
+-- Base de données: `employness_prod`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employness_days`
---
--- Creation: Mar 18, 2012 at 03:58 PM
+-- Structure de la table `employness_days`
 --
 
 DROP TABLE IF EXISTS `employness_days`;
@@ -26,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `employness_days` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `day` date NOT NULL,
   `karma` tinyint(2) NOT NULL DEFAULT '0',
+  `participants` longtext COLLATE utf8_bin COMMENT 'DC2Type:array',
   PRIMARY KEY (`id`),
   UNIQUE KEY `day` (`day`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
@@ -33,9 +32,7 @@ CREATE TABLE IF NOT EXISTS `employness_days` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employness_karma`
---
--- Creation: Mar 18, 2012 at 03:59 PM
+-- Structure de la table `employness_karma`
 --
 
 DROP TABLE IF EXISTS `employness_karma`;
@@ -44,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `employness_karma` (
   `user_id` mediumint(9) NOT NULL,
   `day_id` mediumint(9) NOT NULL,
   `karma` tinyint(2) NOT NULL DEFAULT '0',
+  `anonymous` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_days` (`user_id`,`day_id`),
   KEY `day_id_fk` (`day_id`)
@@ -52,9 +50,7 @@ CREATE TABLE IF NOT EXISTS `employness_karma` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employness_users`
---
--- Creation: Mar 18, 2012 at 03:57 PM
+-- Structure de la table `employness_users`
 --
 
 DROP TABLE IF EXISTS `employness_users`;
@@ -63,16 +59,19 @@ CREATE TABLE IF NOT EXISTS `employness_users` (
   `email` varchar(50) COLLATE utf8_bin NOT NULL,
   `password` varchar(50) COLLATE utf8_bin NOT NULL,
   `token` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `admin` tinyint(4) NOT NULL DEFAULT '0',
+  `evaluated_days` mediumint(6) NOT NULL DEFAULT '0',
+  `karma` mediumint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `employness_karma`
+-- Contraintes pour la table `employness_karma`
 --
 ALTER TABLE `employness_karma`
   ADD CONSTRAINT `day_id_fk` FOREIGN KEY (`day_id`) REFERENCES `employness_days` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
