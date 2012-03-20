@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ user['email'] }}</td>
                 <td>{{ user['evaluated_days'] }}</td>
-                <td>{{ round(user['karma']/user['evaluated_days'], 2) }}</td>
+                <td>{{ twig_round(user['karma'], user['evaluated_days'], 2) }}</td>
                 <td>{% if user['admin'] == 1 %}Admin{% else %}~{% endif %}</td>
             </tr>
         {% endfor %}
@@ -35,7 +35,7 @@
         {% for day in days %}
             <tr>
                 <td>{{ day['day'] }}</td>
-                <td>{{ round(day['karma']/day['participants']|length, 2) }}</td>
+                <td>{{ twig_round(day['karma'], day['participants']|length, 2) }}</td>
                 <td>{{ day['participants'] | length }}</td>
                 <td>
                     <small>

@@ -15,7 +15,7 @@ class AssetsExtension extends \Twig_Extension
     {
         return array(
             'asset' => new \Twig_Function_Method($this, 'getAssetUrl'),
-            'round' => new \Twig_Function_Method($this, 'getRound'),
+            'twig_round' => new \Twig_Function_Method($this, 'getRound'),
         );
     }
 
@@ -24,9 +24,9 @@ class AssetsExtension extends \Twig_Extension
         return $this->basePath.$url;
     }
 
-    public function getRound($val, $precision)
+    public function getRound($val1, $val2, $precision)
     {
-        return round($val, $precision);
+        return is_numeric($val1) && is_numeric($val2) && $val2 != 0 ? round($val1/$val2, $precision) : 0;
     }
 
     public function getName()

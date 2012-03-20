@@ -57,6 +57,21 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 unset($config['db']);
 
 /**
+*   Load DB Repositories
+**/
+$app['user.repository'] = function() use($app) {
+    return new \Employness\Repositories\UserRepository($app['db'], 'employness_users', array('id'));
+};
+
+$app['day.repository'] = function() use($app) {
+    return new \Employness\Repositories\DayRepository($app['db'], 'employness_days', array('id'));
+};
+
+$app['karma.repository'] = function() use($app) {
+    return new \Employness\Repositories\KarmaRepository($app['db'], 'employness_karma', array('id'));
+};
+
+/**
 *   Load Translations
 **/
 $app['translator.messages'] = require_once __DIR__.'/../src/Employness/Resources/translations/translations.php';
@@ -104,9 +119,9 @@ $app->before(function(Request $request) use ($app)
 **/
 $app->error(function (\Exception $e) use ($app) 
 {
-    if ($e instanceof NotFoundHttpException) {
+    if ($e instanceof Exception\NotFoundHttpException) {
         return $app['twig']->render('Default/error.html.twig', array('code' => 404, 'message' => $e->getMessage()));
-    } elseif ($e instanceof AccessDeniedHttpException) {
+    } elseif ($e instanceof Exception\AccessDeniedHttpException) {
         return $app['twig']->render('Default/error.html.twig', array('code' => 403, 'message' => $e->getMessage()));
     }
 

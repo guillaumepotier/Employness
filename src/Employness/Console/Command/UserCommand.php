@@ -40,9 +40,12 @@ class UserCommand extends Command
         }
 
         $app = $this->getApp();
-        // TODO: use proper dql..
-        $sql = "INSERT INTO employness_users SET email = '".mysql_real_escape_string($input->getOption('email'))."' , password = '".sha1(mysql_real_escape_string($input->getOption('password')))."' , token = '".md5(uniqid('_tok'))."', admin = $admin_condition";
-        $app['db']->query($sql);
+        $app['user.repository']->insert(array(
+            'email'     => $input->getOption('email'),
+            'password'  => sha1($input->getOption('password')),
+            'token'     => md5(uniqid('_tok')),
+            'admin'     => $admin_condition,
+        ));
         return;
     }
 }

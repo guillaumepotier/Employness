@@ -22,7 +22,7 @@
                     <tbody>
                         <tr>
                             <td>{{ 'user_best_karma' | trans }}</td>
-                            <td>{{ user_best_karma['email'] }} ~ {% if user_best_karma['evaluated_days'] != 0 %}{{ round(user_best_karma['karma']/user_best_karma['evaluated_days'],2) }}{% else %}0{% endif %} karma</td>
+                            <td>{{ user_best_karma['email'] }} ~ {{ twig_round(user_best_karma['karma'], user_best_karma['evaluated_days'], 2) }} karma</td>
                         </tr>
                         <tr>
                             <td>{{ 'avg_karma_users' | trans }}</td>
@@ -53,7 +53,7 @@
             data.addColumn('number', 'Karma');
             data.addRows([
                 {% for day in days %}
-                    ['{{ day['day']}}', {{ round(day['karma']/day['participants']|length, 2) }}],
+                    ['{{ day['day']}}', {{ twig_round(day['karma'], day['participants']|length, 2) }}],
                 {% else %}
                     ['0', 0]
                 {% endfor %}

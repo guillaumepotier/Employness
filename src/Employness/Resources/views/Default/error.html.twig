@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ 'error' | trans }}{% endblock %}
 
 {% block maincontent %}
-    {% if code == 500 %}
+    {% if code == 500 or code == 403 %}
         {% set style = 'error' %}
     {% else %}
         {% set style = 'warning' %}
