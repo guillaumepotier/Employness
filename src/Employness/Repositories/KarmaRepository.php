@@ -23,8 +23,8 @@ class KarmaRepository extends AbstractRepository
         $user_table = $userRepo->getTable();
 
         $karma_query = $this->conn->fetchAll("
-            SELECT * FROM {$this->table} 
-            LEFT JOIN {$user_table} 
+            SELECT * FROM {$user_table}
+            INNER JOIN {$this->table} 
                 ON {$this->table}.user_id = {$user_table}.".$userRepo->getIdentifier()."
             WHERE day_id >= $day_id");
 

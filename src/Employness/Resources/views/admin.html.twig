@@ -34,7 +34,7 @@
         <tbody>
         {% for key,day in days %}
             <tr>
-                <td>{{ day['id'] }}</td>
+                <td>{{ day['day'] }}</td>
                 <td>{{ twig_round(day['karma'], day['participants']|length, 2) }}</td>
                 <td>{{ day['participants'] | length }}</td>
                 <td>
