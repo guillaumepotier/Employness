@@ -6,7 +6,7 @@ namespace Employness\Form\RateType;
 
 $app['rate.form.service'] = $app->share(function ($app) {
 
-    $form = $app['form.factory']->createBuilder('form');
+    $form = $app['form.factory']->createBuilder('form', null, array('csrf_protection' => false));
 
     return $form->add('karma', 'choice', array(
         'label'             => $app['translator']->trans('rate_your_day'),
@@ -24,6 +24,5 @@ $app['rate.form.service'] = $app->share(function ($app) {
         'label'     =>  $app['translator']->trans('be_anonymous'),
         'required'  => false,
     ))
-    ->getForm()
-    ->remove('_token');
+    ->getForm();
 });

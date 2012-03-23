@@ -85,15 +85,15 @@ $app->match('/give/karma/{day_id}/{email}/{token}', function(Request $request, $
     // TODO: uses prepare and eventually rollback for queries..
     if ($request->getMethod() == 'POST') {
         $form->bindRequest($request);
+        // 
+        // // crappy hack to disable CSRF validation on this form.. Not found better yet..
+        // foreach ($form->getErrors() as $error) {
+        //     if ($error->getMessageTemplate() == 'The CSRF token is invalid. Please try to resubmit the form') {
+        //         $csrf_invalid = true;
+        //     }
+        // }
 
-        // crappy hack to disable CSRF validation on this form.. Not found better yet..
-        foreach ($form->getErrors() as $error) {
-            if ($error->getMessageTemplate() == 'The CSRF token is invalid. Please try to resubmit the form') {
-                $csrf_invalid = true;
-            }
-        }
-
-        if ($form->isValid() || ($csrf_invalid === true && sizeof($form->getErrors()) == 1)) {
+        if ($form->isValid()) {
             $data = $form->getData();
 
             if (false !== $app['karma.repository']->insert(array('user_id' => $user['id'], 'day_id' => $day_id, 'karma' => $data['karma']))) {
