@@ -67,9 +67,14 @@ abstract class AbstractRepository
         return $this->conn->fetchAssoc($query, $params);
     }
 
-    protected function getIdentifier()
+    public function getIdentifier()
     {
         return $this->identifiers[0];
+    }
+
+    public function getTable()
+    {
+        return $this->table;
     }
 
     private static function formatClause(array $keys, $operator = 'AND')

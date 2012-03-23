@@ -2,6 +2,8 @@
 
 namespace Employness\Repositories;
 
+use Employness\Repositories\UserRepository;
+
 class KarmaRepository extends AbstractRepository
 {
     public function getKarmaRepartitionForDayWithId($id)
@@ -13,5 +15,23 @@ class KarmaRepository extends AbstractRepository
         }
 
         return $repartition;
+    }
+
+    public function getKarmas($day_id, UserRepository $userRepo)
+    {
+        $karmas = array();
+        $user_table = $userRepo->getTable();
+
+        $karma_query = $this->conn->fetchAll("
+            SELECT * FROM {$this->table} 
+            LEFT JOIN {$user_table} 
+                ON {$this->table}.user_id = {$user_table}.".$userRepo->getIdentifier()."
+            WHERE day_id >= $day_id");
+
+        foreach ($karma_query as $row) {
+            $karmas[$row['day_id']][$row['email']] = $row;
+        }
+
+        return $karmas;
     }
 }

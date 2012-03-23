@@ -32,15 +32,15 @@
             <td>{{ 'participants_list' | trans }}</td>
         </thead>
         <tbody>
-        {% for day in days %}
+        {% for key,day in days %}
             <tr>
-                <td>{{ day['day'] }}</td>
+                <td>{{ day['id'] }}</td>
                 <td>{{ twig_round(day['karma'], day['participants']|length, 2) }}</td>
                 <td>{{ day['participants'] | length }}</td>
                 <td>
                     <small>
                         {% for participant in day['participants'] %}
-                            {{ participant }}&nbsp;
+                            {{ participant }} {% if karmas[day['id']][participant]['karma'] is defined %}({{ karmas[day['id']][participant]['karma'] }}){% endif %}&nbsp;
                         {% endfor %}
                     </small>
                 </td>
