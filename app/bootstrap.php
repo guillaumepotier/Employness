@@ -38,7 +38,7 @@ $app->register(new Silex\Provider\SymfonyBridgesServiceProvider(), array(
    'symfony_bridges.class_path' => __DIR__ . '/../vendor/symfony/src'
 ));
 $app->register(new Silex\Provider\FormServiceProvider(), array(
-    'form.class_path' => __DIR__ . '/../vendor/symfony/src'
+    'form.class_path' => __DIR__ . '/../vendor/symfony/src',
 ));
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallback'           => 'en',
@@ -81,6 +81,11 @@ if (!isset($app['translator.messages'][$config['locale']])) {
     die('You must provide a valid locale in your config file');
 }
 $app['locale'] = $config['locale'];
+
+/**
+*   Load some custom Services
+**/
+require __DIR__.'/../src/Employness/Service/Services.php';
 
 /**
 *   Load Controllers

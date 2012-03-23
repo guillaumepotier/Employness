@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <form method="POST" action="{{ url }}" class="well">
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-info" value="{{ 'rate' | trans }}" />
+        </form>
+
+        <br/><br/>
+
+        <center>{{ 'email_difficulties' | trans({'%url%': url}) }}</center>
+
+    </body>
+</html>

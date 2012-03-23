@@ -51,11 +51,14 @@ class DayCommand extends Command
                             'day_id'    => $day['id'],
                         ),true);
 
+                    // let's roll, build the html body!
+                    $body = $app['twig']->render('Default/form_standalone.html.twig', array('url' => $url, 'form' => $app['rate.form.service']->createView()));
+
                     $message = \Swift_Message::newInstance()
                             ->setSubject('[Employness] '.$app['translator']->trans('daily_feedback_subject').' ('.$day['day'].')')
                             ->setFrom(array($app['mailer.email'] => 'Employness'))
                             ->setTo(array($user['email']))
-                            ->setBody($app['translator']->trans('daily_feedback_body').' <a href="'.$url.'">'.$url.'</a>', 'text/html')
+                            ->setBody($body, 'text/html')
                             ->addPart($app['translator']->trans('daily_feedback_body').' '.$url, 'text/plain');
                     $app['mailer']->send($message);
                     echo "Email sent to ".$user['email']."\n";

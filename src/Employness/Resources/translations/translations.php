@@ -49,6 +49,7 @@ return array(
         'be_anonymous'      =>  'I\'d like to be anonymous',
         'daily_feedback_subject'    =>  'Rate your day!',
         'daily_feedback_body'   =>  'Please, take a few seconds to rate your day here: ',
+        'email_difficulties'    =>  'If you have difficulties to see this email or rate your day, please click here: %url%',
     ),
     'fr'    =>  array(
         'hello'             =>  'Salut',
