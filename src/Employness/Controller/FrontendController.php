@@ -85,13 +85,6 @@ $app->match('/give/karma/{day_id}/{email}/{token}', function(Request $request, $
     // TODO: uses prepare and eventually rollback for queries..
     if ($request->getMethod() == 'POST') {
         $form->bindRequest($request);
-        // 
-        // // crappy hack to disable CSRF validation on this form.. Not found better yet..
-        // foreach ($form->getErrors() as $error) {
-        //     if ($error->getMessageTemplate() == 'The CSRF token is invalid. Please try to resubmit the form') {
-        //         $csrf_invalid = true;
-        //     }
-        // }
 
         if ($form->isValid()) {
             $data = $form->getData();
