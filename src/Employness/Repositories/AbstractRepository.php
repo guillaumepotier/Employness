@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This file is part of gordonslondons' SilexBlog.
+ * https://github.com/gordonslondon/SilexBlog
+ */
+ 
 namespace Employness\Repositories;
 
 use Doctrine\DBAL\Connection;
