@@ -19,3 +19,11 @@ See misc/crontab.rst for more info on how to send daily emails through cron
 * Add comment option when you rate your day
 * Improve admin backend (mainly usermanagement)
 * Possibility to create multi companies
+
+# Screens
+
+![Employness homepage](https://raw.github.com/guillaumepotier/Employness/master/misc/screen_1.png)
+<p>Employness homepage</p>
+
+![Employness backend](https://raw.github.com/guillaumepotier/Employness/master/misc/screen_2.png)
+<p>Employness backend</p>
