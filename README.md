@@ -7,6 +7,7 @@ This is a pet project that aims to know more Silex and it interactions with Sf2 
 
 ```
 cp app/config/config.php.dist app/config/config.php
+git submodule update --init
 chmod -R 777 app/logs
 ```
 
