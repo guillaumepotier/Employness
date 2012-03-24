@@ -9,3 +9,13 @@ This is a pet project that aims to know more Silex and it interactions with Sf2 
 cp app/config/config.php.dist app/config/config.php
 chmod -R 777 app/logs
 ```
+
+See misc/crontab.rst for more info on how to send daily emails through cron
+
+# TODOS
+
+* Add french messages
+* Add categories/tags for employees.
+* Add comment option when you rate your day
+* Improve admin backend (mainly usermanagement)
+* Possibility to create multi companies
