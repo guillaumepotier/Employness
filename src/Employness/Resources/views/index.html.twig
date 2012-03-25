@@ -62,10 +62,15 @@
             var options = {
                 width: 1170,
                 height: 216,
+                vAxis: {
+                    viewWindowMode: 'explicit',
+                    viewWindow: {
+                        max:5,
+                        min:0
+                    }
+                },
                 hAxis: {
-                    maxValue: 5,
-                    minValue: 0,
-                    baseline: 0,
+                    viewWindowMode: 'pretty',
                 }
             };
 
