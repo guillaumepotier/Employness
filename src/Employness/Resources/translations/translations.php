@@ -7,6 +7,7 @@ return array(
         'about'             =>  'About',
         'admin'             =>  'Administration',
         'email'             =>  'Email address',
+		'category'          =>  'Category',
         'password'          =>  'Password',
         'send'              =>  'Send',
         'login'             =>  'Login',

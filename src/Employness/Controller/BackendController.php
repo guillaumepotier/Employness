@@ -13,7 +13,7 @@ $app->get('/admin', function() use($app)
     $days_keys = array_keys($days);
 
     return $app['twig']->render('admin.html.twig', array(
-        'users'     =>  $app['user.repository']->findAll(),
+        'users'     =>  $app['user.repository']->findAllJoinCategory(),
         'days'      =>  array_reverse($days),
         'karmas'    =>  $app['karma.repository']->getKarmas($days[$days_keys[0]]['id'], $app['user.repository']),
     ));

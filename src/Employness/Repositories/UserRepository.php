@@ -19,4 +19,17 @@ class UserRepository extends AbstractRepository
         $avg = $this->conn->fetchAssoc("SELECT AVG(karma/evaluated_days) AS avg FROM {$this->table}");
         return round($avg['avg'], 2);
     }
+
+    public function findAllJoinCategory()
+    {
+    	 $queryBuilder = $this->conn->createQueryBuilder();
+    	 $queryBuilder
+    	 	->select  ( '*' )
+    	 	->from	  ( $this->table, 'u' )
+            ->leftJoin( 'u', 'employness_categories', 'c', 'c.id=u.category_id' )
+            ->orderBy ( 'c.name' )
+            ->orderBy ( 'u.email' );
+
+		return $this->conn->fetchAll( $queryBuilder->getSql() );
+    }
 }
