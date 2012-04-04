@@ -61,6 +61,10 @@ unset($config['mailer']);
 /**
 *   Load DB Repositories
 **/
+$app['category.repository'] = function() use($app) {
+    return new \Employness\Repositories\CategoryRepository($app['db'], 'employness_categories', array('id'));
+};
+
 $app['user.repository'] = function() use($app) {
     return new \Employness\Repositories\UserRepository($app['db'], 'employness_users', array('id'));
 };
@@ -124,7 +128,7 @@ $app->before(function(Request $request) use ($app)
 /**
 *   Custom error pages
 **/
-$app->error(function (\Exception $e) use ($app) 
+$app->error(function (\Exception $e) use ($app)
 {
     if ($e instanceof Exception\NotFoundHttpException) {
         return $app['twig']->render('Default/error.html.twig', array('code' => 404, 'message' => $e->getMessage()));
