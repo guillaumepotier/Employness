@@ -24,7 +24,7 @@ class UserRepository extends AbstractRepository
     {
     	 $queryBuilder = $this->conn->createQueryBuilder();
     	 $queryBuilder
-    	 	->select  ( '*' )
+    	 	->select  ( "u.id as uid, u.*, c.*" )
     	 	->from	  ( $this->table, 'u' )
             ->leftJoin( 'u', 'employness_categories', 'c', 'c.id=u.category_id' )
             ->orderBy ( 'c.name' )
