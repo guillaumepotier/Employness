@@ -11,11 +11,16 @@ use Symfony\Component\HttpKernel\Exception as Exception;
  */
 $app->get('/', function() use($app)
 {
-    $days = $app['day.repository']->getDays();
+    $days		  = $app['day.repository']->getDaysByCategory();
     $yesterday_id = isset($days[date('Y-m-d', strtotime("yesterday"))]['id']) ? $days[date('Y-m-d', strtotime("yesterday"))]['id'] : -1;
+    $categories   = array();
+    foreach( $days as $day )
+    	$categories = array_merge( $categories, array_keys( $day['categories'] ) );
+	$categories = array_unique( $categories );
 
     return $app['twig']->render('index.html.twig', array(
         'days'                  =>  $days,
+    	'categories'			=>	$categories,
         'avg_last_days_karma'   =>  $app['day.repository']->getAvgKarma(),
         'avg_karma_users'       =>  $app['user.repository']->getAvgUsersKarma(),
         'user_best_karma'       =>  $app['user.repository']->getUserWithBestKarma(),

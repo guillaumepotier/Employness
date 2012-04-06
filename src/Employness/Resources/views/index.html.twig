@@ -51,11 +51,26 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Days');
             data.addColumn('number', 'Karma');
+            {% for category in categories %}
+	            data.addColumn('number', '{{ category ? category : 'none' | trans }}');
+            {% endfor %}
             data.addRows([
                 {% for day in days %}
-                    ['{{ day['day']}}', {{ twig_round(day['karma'], day['participants']|length, 2) }}],
+                    ['{{ day['day']}}', {{ twig_round(day['karma'], day['participants']|length, 2) }}
+	                    {% for category in categories %}
+	                    	, {% if category in day['categories']|keys %}
+	   	                 		{{ twig_round(day['categories'][category]['karma'], day['categories'][category]['participants']|length, 2) }}
+	   	                 	  {% else %}
+	   	                 	  	0
+	   	                 	  {% endif %}
+			            {% endfor %}
+                    ],
                 {% else %}
-                    ['0', 0]
+                    ['0', 0
+	                    {% for category in categories %}
+	                    	, 0
+			            {% endfor %}
+                    ]
                 {% endfor %}
             ]);
 
@@ -72,9 +87,9 @@
                 hAxis: {
                     viewWindowMode: 'pretty',
                 },
-                pointSize: 9,
-                lineWidth: 4,
-                colors: ['#058dc7'],
+                pointSize: 5,
+				//lineWidth: 4,
+                //colors: ['#058dc7'],
                 areaOpacity: 0.1,
             };
 
