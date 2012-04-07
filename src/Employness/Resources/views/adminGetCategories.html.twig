@@ -1,25 +1,25 @@
 <div style="background-color: white; border-color: black;  border-style: double;">
-	<table class="table table-striped table-condensed" style="width: 200 px;">
+    <table class="table table-striped table-condensed" style="width: 200 px;">
         <thead>
             <td>{{ 'choose_category' | trans }}</td>
         </thead>
-	    <tbody>
-	    <tr>
-	        <td>
-	        	<a class="brand" href="{{ path('adminUpdateCategoryUser', { 'user_id': user_id, 'category_id': 0 }) }}">
-					{% if 0 == category_id %}<strong>{{ 'none' | trans }}</strong>{% else %}{{ 'none' | trans }}{% endif %}
-	        	</a>
-	        </td>
-	    </tr>
-	    {% for category in categories %}
-	        <tr>
-	            <td>
-	            	<a class="brand" href="{{ path('adminUpdateCategoryUser', { 'user_id': user_id, 'category_id': category['id']}) }}">
-	            		{% if category['id'] == category_id %}<strong>{{ category['name'] }}</strong>{% else %}{{ category['name'] }}{% endif %}
-	            	</a>
-	            </td>
-	        </tr>
-	    {% endfor %}
-	    </tbody>
-	</table>
+        <tbody>
+        <tr>
+            <td>
+                <a class="brand" href="{{ path('adminUpdateCategoryUser', { 'user_id': user_id, 'category_id': 0 }) }}">
+                    {% if 0 == category_id %}<strong>{{ 'none' | trans }}</strong>{% else %}{{ 'none' | trans }}{% endif %}
+                </a>
+            </td>
+        </tr>
+        {% for category in categories %}
+            <tr>
+                <td>
+                    <a class="brand" href="{{ path('adminUpdateCategoryUser', { 'user_id': user_id, 'category_id': category['id']}) }}">
+                        {% if category['id'] == category_id %}<strong>{{ category['name'] }}</strong>{% else %}{{ category['name'] }}{% endif %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>

@@ -22,14 +22,14 @@ class UserRepository extends AbstractRepository
 
     public function findAllJoinCategory()
     {
-    	 $queryBuilder = $this->conn->createQueryBuilder();
-    	 $queryBuilder
-    	 	->select  ( "u.id as uid, u.*, c.*" )
-    	 	->from	  ( $this->table, 'u' )
+         $queryBuilder = $this->conn->createQueryBuilder();
+         $queryBuilder
+            ->select  ( "u.id as uid, u.*, c.*" )
+            ->from    ( $this->table, 'u' )
             ->leftJoin( 'u', 'employness_categories', 'c', 'c.id=u.category_id' )
             ->orderBy ( 'c.name' )
             ->orderBy ( 'u.email' );
 
-		return $this->conn->fetchAll( $queryBuilder->getSql() );
+        return $this->conn->fetchAll( $queryBuilder->getSql() );
     }
 }

@@ -31,28 +31,28 @@ class DayRepository extends AbstractRepository
 
     public function getDaysByCategory($limit = 30)
     {
-    	$output = $this->getDays($limit);
+        $output = $this->getDays($limit);
 
-    	/** The offset of the initial row is 0 (not 1) */
-    	$limit = $limit-1;
+        /** The offset of the initial row is 0 (not 1) */
+        $limit = $limit-1;
 
-    	/** Only with MySql >= 4.1 (GROUP_CONCAT) ! */
+        /** Only with MySql >= 4.1 (GROUP_CONCAT) ! */
         $query = "SELECT    d.day, c.name, SUM( k.karma ) AS karma, GROUP_CONCAT( u.email ) AS participants
-        		  FROM      employness_days       d
-        		  LEFT JOIN employness_karma      k ON ( d.id          = k.day_id )
-        		  LEFT JOIN employness_users      u ON ( k.user_id     = u.id     )
-        		  LEFT JOIN employness_categories c ON ( u.category_id = c.id     )
-        		  WHERE     d.day >= (
-        		  				 SELECT COALESCE( (
-        		  				 			SELECT   day
-						 					FROM     employness_days
-						 					ORDER BY day DESC
-						 					LIMIT    {$limit}, 1
-						 					),
-			 								min(day) )
-								 FROM employness_days )
-        		 GROUP BY  d.day, c.name
-        		 ORDER BY  d.id DESC";
+                  FROM      employness_days       d
+                  LEFT JOIN employness_karma      k ON ( d.id          = k.day_id )
+                  LEFT JOIN employness_users      u ON ( k.user_id     = u.id     )
+                  LEFT JOIN employness_categories c ON ( u.category_id = c.id     )
+                  WHERE     d.day >= (
+                                 SELECT COALESCE( (
+                                            SELECT   day
+                                            FROM     employness_days
+                                            ORDER BY day DESC
+                                            LIMIT    {$limit}, 1
+                                        ),
+                                        min(day) )
+                                 FROM employness_days )
+                 GROUP BY  d.day, c.name
+                 ORDER BY  d.id DESC";
 
         if (isset($this->cache[md5($query)])) {
             return $this->cache[md5($query)];
@@ -62,8 +62,8 @@ class DayRepository extends AbstractRepository
 
         foreach ($days as $row) {
             $output[$row['day']]['categories'][$row['name']] = array(
-				'karma'         =>  $row['karma'],
-            	'participants'  =>  explode( ',', $row['participants'] ),
+                'karma'         =>  $row['karma'],
+                'participants'  =>  explode( ',', $row['participants'] ),
             );
         }
 

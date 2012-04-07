@@ -16,10 +16,10 @@
         {% for user in users %}
             <tr>
                 <td>
-                	<a href="#" title="{{ 'choose_category' | trans }}" class="choose_category" id="user_id_{{ user['uid'] }}">
-	                	<i class="icon-play"></i>
-	                	{% if user['name'] %}{{ user['name'] }}{% else %}{{ 'none' | trans }}{% endif %}
-					</a>
+                    <a href="#" title="{{ 'choose_category' | trans }}" class="choose_category" id="user_id_{{ user['uid'] }}">
+                        <i class="icon-play"></i>
+                        {% if user['name'] %}{{ user['name'] }}{% else %}{{ 'none' | trans }}{% endif %}
+                    </a>
                 </td>
                 <td>{{ user['email'] }}</td>
                 <td>{{ user['evaluated_days'] }}</td>
@@ -58,43 +58,43 @@
         </tbody>
     </table>
 
-	<div id="submenu"><?php /* AJAX */ ?></div>
+    <div id="submenu"><?php /* AJAX */ ?></div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
-		$(document).ready(function (){
-			$('.choose_category').click(function(e){
-				user_id = $(this).attr('id').substr( 8 );
-	
-				// update submenu (ajax)
-				$.ajax({
-					url:'/admin/getCategories/' + user_id,
-					type:'POST',
-					dataType:'html',
-					success:function(data, textStatus){
-						$('#submenu')
-						.html(data)
-						.css({
-							'position' : 'absolute',
-							'left' : e.pageX+'px',
-							'top' : e.pageY+5+'px'
-						})
-						.mouseleave(function(){
-							$('#submenu').hide();
-						})
-						.fadeIn(200);
-					}
-				});
-	
-				$(':not(#submenu, .choose_category)').click(function(){
-					$('#submenu').hide();
-				});
-	
-				return false;
-			});
-		});
+        $(document).ready(function (){
+            $('.choose_category').click(function(e){
+                user_id = $(this).attr('id').substr( 8 );
+
+                // update submenu (ajax)
+                $.ajax({
+                    url:'/admin/getCategories/' + user_id,
+                    type:'POST',
+                    dataType:'html',
+                    success:function(data, textStatus){
+                        $('#submenu')
+                        .html(data)
+                        .css({
+                            'position' : 'absolute',
+                            'left' : e.pageX+'px',
+                            'top' : e.pageY+5+'px'
+                        })
+                        .mouseleave(function(){
+                            $('#submenu').hide();
+                        })
+                        .fadeIn(200);
+                    }
+                });
+
+                $(':not(#submenu, .choose_category)').click(function(){
+                    $('#submenu').hide();
+                });
+
+                return false;
+            });
+        });
     </script>
 {% endblock %}
