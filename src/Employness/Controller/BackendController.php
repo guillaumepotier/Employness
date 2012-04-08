@@ -37,7 +37,7 @@ $app->post('/admin/getCategories/{user_id}', function($user_id) use($app)
 ->bind('adminGetCategories');
 
 /**
- * Update category's user
+ * Update user's category
  */
 $app->get('/admin/updateCategoryUser/{user_id}/{category_id}', function(Request $request, $user_id, $category_id) use ($app)
 {
