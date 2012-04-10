@@ -65,16 +65,17 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        $(document).ready(function (){
-            $('.choose_category').click(function(e){
-                user_id = $(this).attr('id').substr( 8 );
+        $(document).ready(function () {
+            $('.choose_category').click(function(e) {
+                user_id = $(this).attr('id').substr(8);
 
                 // update submenu (ajax)
                 $.ajax({
-                    url:'/admin/getCategories/' + user_id,
+                    url:'{{ path("adminGetCategories") }}',
+                    data: {user_id: user_id},
                     type:'POST',
                     dataType:'html',
-                    success:function(data, textStatus){
+                    success:function(data, textStatus) {
                         $('#submenu')
                         .html(data)
                         .css({
@@ -89,7 +90,7 @@
                     }
                 });
 
-                $(':not(#submenu, .choose_category)').click(function(){
+                $(':not(#submenu, .choose_category)').click(function() {
                     $('#submenu').hide();
                 });
 

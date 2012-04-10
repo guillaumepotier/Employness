@@ -24,14 +24,18 @@ $app->get('/admin', function() use($app)
 /**
  * AJAX: get categories
  */
-$app->post('/admin/getCategories/{user_id}', function($user_id) use($app)
+$app->post('/admin/getCategories', function(Request $request) use($app)
 {
+    if (!$request->request->has('user_id') && is_numeric($request->request->get('user_id'))) {
+        return false;
+    }
+
+    $user_id = $request->request->get('user_id');
     $user = $app['user.repository']->find($user_id);
 
     return $app['twig']->render('adminGetCategories.html.twig', array(
         'categories'    => $app['category.repository']->findAll(),
-        'category_id'   => $user['category_id'],
-        'user_id'       => $user_id,
+        'user'          => $user,
     ));
 })
 ->bind('adminGetCategories');

@@ -11,12 +11,13 @@ use Symfony\Component\HttpKernel\Exception as Exception;
  */
 $app->get('/', function() use($app)
 {
-    $days         = $app['day.repository']->getDaysByCategory();
+    $days = $app['day.repository']->getDaysByCategory();
     $yesterday_id = isset($days[date('Y-m-d', strtotime("yesterday"))]['id']) ? $days[date('Y-m-d', strtotime("yesterday"))]['id'] : -1;
-    $categories   = array();
-    foreach( $days as $day )
-        $categories = array_merge( $categories, array_keys( $day['categories'] ) );
-    $categories = array_unique( $categories );
+    $categories = array();
+    foreach ($days as $day) {
+        $categories = array_merge($categories, array_keys($day['categories']));
+    }
+    $categories = array_unique($categories);
 
     return $app['twig']->render('index.html.twig', array(
         'days'                  =>  $days,

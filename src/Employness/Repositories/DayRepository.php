@@ -63,7 +63,7 @@ class DayRepository extends AbstractRepository
         foreach ($days as $row) {
             $output[$row['day']]['categories'][$row['name']] = array(
                 'karma'         =>  $row['karma'],
-                'participants'  =>  explode( ',', $row['participants'] ),
+                'participants'  =>  explode(',', $row['participants']),
             );
         }
 
