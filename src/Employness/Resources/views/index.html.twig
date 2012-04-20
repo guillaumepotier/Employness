@@ -4,7 +4,7 @@
 
 {% block maincontent %}
     <!-- Main hero unit for a primary marketing message or call to action -->
-    <div style="padding:0;">
+    <div style="padding:0;height:356px;">
         <h2 style="text-align: center;">{{ 'karma_for_last_30_days' | trans }}</h2>
         <div id="global_chart" style="width: 1170px; height: 216px;">{% if days | length == 0 %}{{ 'not_enough_data' | trans }}{% endif %}</div>
     </div>
